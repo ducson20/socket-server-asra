@@ -4,9 +4,9 @@ export const createUser = async (args = {}) => {
   // Validate args
   const validateArgs = (args = {}) => {
     const { username, thumbnail } = args;
-
+    console.log("username create: ", args);
     if (!username) {
-      throw new Error(`Property "${key}" empty/null`);
+      throw new Error(`Property "${username}" empty/null`);
     }
 
     return args;
