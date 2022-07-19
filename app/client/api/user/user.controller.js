@@ -11,9 +11,9 @@ const api = express.Router();
 
 api.post("/create", async (req, res) => {
   try {
-    const { username } = req.body;
+    const { username, thumbnail } = req.body;
 
-    const results = await createUser(username);
+    const results = await createUser({ username, thumbnail });
 
     return res.json(success(results));
   } catch (err) {

@@ -1,26 +1,11 @@
-import {
-  createUser,
-  checkUserExited,
-  updateNumberOfNewNotification,
-} from "../user/user.service.js";
+import { updateNumberOfNewNotification } from "../user/user.service.js";
 
 import { createNotification } from "../notification/notification.service.js";
 
 let onlineUsers = [];
 
-export const addNewUser = async (userInfo, socketId) => {
-  const { username } = userInfo;
-  
+export const addNewUser = async (username, socketId) => {
   try {
-    // Check user exited
-    const isUserExited = await checkUserExited(username);
-
-    // If user does not exit
-    if (!isUserExited?.isExited) {
-      // Create new user into database
-      await createUser(userInfo);
-    }
-
     // All user online connect to server
     !onlineUsers.some((user) => user.username === username) &&
       onlineUsers.push({ username, socketId });

@@ -8,10 +8,9 @@ import {
 export const socketService = (io) => {
   io.on("connection", (socket) => {
     // Listen event addNewUser with user logged
-    socket.on("addNewUser", (userInfo) => {
-      console.log(userInfo);
-      // Save new user into database
-      addNewUser(userInfo, socket.id);
+    socket.on("addNewUser", (username) => {
+      // Add new user online
+      addNewUser(username, socket.id);
     });
 
     // Listen event sendNotification form a sender
@@ -24,7 +23,7 @@ export const socketService = (io) => {
         const receiver = getUsesOnline(receiverName);
 
         // Send information for a receiver
-        io.to(receiver.socketId).emit("getNotification", {
+        io.to(receiver?.socketId).emit("getNotification", {
           id: data?._id,
           senderName,
           message: data?.message,
