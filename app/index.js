@@ -10,11 +10,13 @@ import {
   MONGODB_USER,
   MONGODB_DATABASE,
   MONGODB_PASS,
-  PORT
+  PORT,
 } from "./environment.js";
 const app = express();
 const corsOptions = {
   origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 };
 
 const urlConnection = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.rijaa.${MONGODB_URL}.net/${MONGODB_DATABASE}?retryWrites=true&w=majority`;
