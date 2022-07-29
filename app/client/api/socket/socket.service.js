@@ -26,11 +26,13 @@ export const getUsesOnline = (username) => {
 
 export const sendNotification = async (args = {}) => {
   try {
-    // Up 1 unit for number of new notification
-    await updateNumberOfNewNotification(args);
-
-    // Create new notification into database
-    return await createNotification(args);
+    let receiverInfo = Promise.all([
+      // Up 1 unit for number of new notification
+      await updateNumberOfNewNotification(args),
+      // Create new notification into database
+      await createNotification(args),
+    ]);
+    return receiverInfo;
   } catch (err) {
     throw new Error(err.message);
   }

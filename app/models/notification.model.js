@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 const NotificationSchema = new Schema(
   {
+    roomId: {
+      type: Number,
+      required: true,
+    },
     sender: {
       type: Schema.Types.ObjectId,
       ref: "user",

@@ -5,7 +5,7 @@ import User from "../../../models/user.model.js";
 export const createNotification = async (args = {}) => {
   // Validate args
   const validateArgs = (args = {}) => {
-    const { senderName, receiverName, type, message } = args;
+    const { roomId, senderName, receiverName, type, message } = args;
 
     Object.keys(args).forEach((key) => {
       if (!args[key]) {
@@ -16,7 +16,8 @@ export const createNotification = async (args = {}) => {
     return args;
   };
 
-  const { senderName, receiverName, type, message } = await validateArgs(args);
+  const { roomId, senderName, receiverName, type, message } =
+    await validateArgs(args);
 
   try {
     // Find sender on database
@@ -36,6 +37,7 @@ export const createNotification = async (args = {}) => {
     if (!receiverUser) throw new Error("Receiver does not exited");
 
     const notification = new Notification({
+      roomId: roomId,
       sender: senderUser?.id,
       receiver: receiverUser?.id,
       type,
@@ -79,6 +81,7 @@ export const getNotificationsByUser = async (username) => {
           _id: mongoose.Types.ObjectId(notification?.sender),
         });
         return {
+          roomId: notification?.roomId,
           id: notification?.id,
           sender: sender?.username,
           message: notification?.message,
