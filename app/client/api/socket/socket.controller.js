@@ -21,16 +21,18 @@ export const socketService = (io) => {
       // Save new notification into database
       sendNotification(notificationInfo).then((data) => {
         const receiver = getUsesOnline(receiverName);
-
+        let userData = data[0];
+        let notificationData = data[1]
         // Send information for a receiver
         io.to(receiver?.socketId).emit("getNotification", {
-          id: data?._id,
+          id: notificationData?._id,
           senderName,
-          message: data?.message,
-          type: data?.type,
-          isRead: data?.isRead,
+          message: notificationData?.message,
+          type: notificationData?.type,
+          isRead: notificationData?.isRead,
           thumbnail,
-          createdAt: data?.createdAt,
+          numberOfNewNotification: userData?.numberOfNewNotification,
+          createdAt: notificationData?.createdAt,
         });
       });
     });

@@ -69,7 +69,7 @@ export const updateNumberOfNewNotification = async (args = {}) => {
     user.numberOfNewNotification += 1;
 
     // Update number of notification into database
-    await user.save();
+    return await user.save();
   } catch (err) {
     throw new Error(err.message);
   }
